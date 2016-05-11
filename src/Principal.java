@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Principal {
@@ -21,6 +22,9 @@ public class Principal {
         int opcio= 0;//opció que escollira l'usuari
         int opcio_submenu= 0;
         int opcio_submenu_llistat=0;
+
+        /*Definicio de variables*/
+        ArrayList<Usuari> Agenda= new ArrayList<Usuari>();  //ArrayList Per a la agenda
 
         while (opcio<menu_principal.length-1){
             gui.decoracio_menus(menu_principal.length, menu_principal);

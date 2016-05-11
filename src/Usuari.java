@@ -6,13 +6,19 @@ public class Usuari{
     String cognom;
     String correu;
     String contrasenya;
+    String usuari;
+    Boolean baixa;
 
-    public Usuari(String nom,String cognom,String correu,String contrasenya){
+    public Usuari(String nom, String cognom, String correu, String contrasenya, String usuari, Boolean baixa){
         this.nom = nom;
         this.cognom = cognom;
         this.correu = correu;
         this.contrasenya = contrasenya;
+        this.usuari = usuari;
+        this.baixa = baixa;
     }
 
-
+    public Boolean getBaixa() {
+        return baixa;
+    }
 }

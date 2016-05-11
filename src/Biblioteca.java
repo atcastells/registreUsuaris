@@ -8,6 +8,11 @@ import java.util.Scanner;
  * Created by acastells on 02/05/16.
  */
 public class Biblioteca {
+
+    /*************************************************************************/
+    /*··································MENUS································*/
+    /*************************************************************************/
+
     /*DECORACIÓ MENUS*/
     public static void decoracio_menus(int longitud_array, String[] array){
         String[] temp = array;
@@ -65,9 +70,24 @@ public class Biblioteca {
         }
         System.out.println(linia_decoracio);
 
-
     }
-    void llegirLinia(File arxiu){
+
+    /*************************************************************************/
+    /*·····························IMPRESIONS································*/
+    /*************************************************************************/
+
+    /*IMPRIMIR TEXT*/
+    void imprimir(String text){ //imprimeix el text
+        PrintStream escriptor = new PrintStream(System.out);
+        escriptor.print(text);
+    }
+
+    /*************************************************************************/
+    /*·······························LECTURES································*/
+    /*************************************************************************/
+
+    /*LLEGIR ARXIU*/
+    void llegirLinia(File arxiu){ //llegir arxiu existent o no
         try {
             Scanner sc = new Scanner(arxiu);
         }
@@ -75,12 +95,9 @@ public class Biblioteca {
             imprimir("No hi ha arxiu\n");
         }
     }
-    void imprimir(String text){
-        PrintStream escriptor = new PrintStream(System.out);
-        escriptor.print(text);
-    }
 
-    int readInt(String missatge) {
+    /*LLEGIR ENTER*/
+    int readInt(String missatge){ //llegir enter
         Scanner sc = new Scanner(System.in);
         try {
             imprimir(missatge);
@@ -90,4 +107,38 @@ public class Biblioteca {
             return (readInt(missatge));
         }
     }
+
+    /*LLEGIR STRING*/
+    public String llegirString(){
+
+        String cadena;
+        Scanner sc = new Scanner(System.in);
+
+        cadena = sc.nextLine();
+        return cadena;
+    }
+
+    /*************************************************************************/
+    /*································GETTERS································*/
+    /*************************************************************************/
+
+    /*************************************************************************/
+    /*································SETTERS································*/
+    /*************************************************************************/
+
+
+    /*************************************************************************/
+    /*·································ALTRES································*/
+    /*************************************************************************/
+
+    /*APRETAR INTRO PER A CONTINUAR*/
+    public void continuar(){
+
+        Scanner sc = new Scanner(System.in);
+
+        imprimir("Prem intro per continuar...");
+        sc.nextLine();
+    }
+
 }
+
