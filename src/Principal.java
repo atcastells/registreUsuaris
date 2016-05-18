@@ -71,7 +71,6 @@ public class Principal {
 
     void carregarDades (File arxiu,ArrayList<Usuari> agenda){
            String linia = "";
-
     try {
         Scanner sc = new Scanner(arxiu);
         while (sc.hasNextLine()){
@@ -121,6 +120,20 @@ public class Principal {
 
     //Arrays columnes
     String[] columnesUsuari = {
-            "Nº","USUARI","NOM","COGNOM","CORREU","CONTRASENYA","BAIXA"
+            "Nº","USUARI","NOM","COGNOM","CORREU"
     };
+
+    /*FUNCIONS AUXILIARS*/
+    String[][] llistaToArray(ArrayList<Usuari> llista){
+        String[][] dadesUsuaris = new String[llista.size()][7];
+        for (int i = 0; i < llista.size(); i++) {
+            dadesUsuaris[i][0] = i+".";
+            dadesUsuaris[i][1] = llista.get(i).usuari;
+            dadesUsuaris[i][2] = llista.get(i).nom;
+            dadesUsuaris[i][3] = llista.get(i).cognom;
+            dadesUsuaris[i][4] = llista.get(i).correu;
+
+        }
+        return dadesUsuaris;
+    }
 }

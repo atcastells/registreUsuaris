@@ -1,6 +1,3 @@
-/**
- * Created by acastells on 02/05/16.
- */
 public class Usuari{
     String nom;
     String cognom;
@@ -9,7 +6,7 @@ public class Usuari{
     String usuari;
     Boolean baixa;
 
-    public Usuari(String usuari,String nom, String cognom, String correu, String contrasenya, Boolean baixa){
+    public Usuari(String nom, String cognom, String correu, String contrasenya, String usuari, Boolean baixa){
         this.nom = nom;
         this.cognom = cognom;
         this.correu = correu;
@@ -18,7 +15,44 @@ public class Usuari{
         this.baixa = baixa;
     }
 
-    public Boolean getBaixa() {
+    public String toString(){
+        return usuari +" "+ nom +" "+ cognom +" "+ correu +" "+ contrasenya +" "+ baixa;
+    }
+
+    /*************************************************************************/
+    /*································GETTERS································*/
+    /*************************************************************************/
+
+    public String getnom() {
+        return nom;
+    }
+
+    public String getcognom() {
+        return cognom;
+    }
+
+    public String correu() {
+        return correu;
+    }
+
+    public String contrasenya() {
+        return contrasenya;
+    }
+
+    public String usuari() {
+        return usuari;
+    }
+
+    public boolean getbaixa() {
         return baixa;
     }
+
+    /*************************************************************************/
+    /*································SETTERS································*/
+    /*************************************************************************/
+
+    public void setbaixa(boolean opcio) {
+        baixa = opcio;
+    }
+
 }

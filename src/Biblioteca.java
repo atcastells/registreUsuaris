@@ -10,10 +10,10 @@ import java.util.Scanner;
 public class Biblioteca {
 
     /*************************************************************************/
-    /*··································MENUS································*/
+   /*··································MENUS································*/
     /*************************************************************************/
 
-    /*DECORACIÓ MENUS*/
+   /*DECORACIÓ MENUS*/
     public static void decoracio_menus(int longitud_array, String[] array){
         String[] temp = array;
         Scanner sc = new Scanner(System.in);
@@ -26,7 +26,7 @@ public class Biblioteca {
             array[i] = DECO + " " + array[i];
         }
 
-        /*Contador de caracters*/
+       /*Contador de caracters*/
         longitud = array[1].length();
         for (int i = 1; i < longitud_array; i++) {//cerquem la línia amb més longitud
             if (longitud < array[i].length()) {
@@ -34,7 +34,7 @@ public class Biblioteca {
             } else;
         }
 
-        /*Decoració del menu (dreta)*/
+       /*Decoració del menu (dreta)*/
         for (int i = 1; i < longitud_array; i++) {//afegim espais a les línies per igualar-les
             while (array[i].length() < longitud) {
                 array[i] =array[i] + " ";
@@ -47,7 +47,7 @@ public class Biblioteca {
         }
 
 
-        /*Decoració capsalera del menú*/
+       /*Decoració capsalera del menú*/
         while(array[0].length()<longitud){ //centrem la capsalera segons la longitud
             array[0]=" "+array[0]+" ";
         }
@@ -58,12 +58,12 @@ public class Biblioteca {
                 array[i]= array[i]+" "+DECO;
             }
         }
-        /*lines inferior i superior*/
+       /*lines inferior i superior*/
         while (linia_decoracio.length() < array[0].length()) { //es creen les docarcións superiors i inferiors am la matèixa longitud que la resta de línies
             linia_decoracio = linia_decoracio + DECO;
         }
 
-        /*Imprimir menú*/
+       /*Imprimir menú*/
         System.out.println(linia_decoracio);
         for (int i = 0; i < longitud_array; i++) {
             System.out.println(array[i]);
@@ -73,20 +73,26 @@ public class Biblioteca {
     }
 
     /*************************************************************************/
-    /*·····························IMPRESIONS································*/
+   /*·····························IMPRESIONS································*/
     /*************************************************************************/
 
-    /*IMPRIMIR TEXT*/
+   /*IMPRIMIR TEXT*/
     void imprimir(String text){ //imprimeix el text
         PrintStream escriptor = new PrintStream(System.out);
         escriptor.print(text);
     }
 
+    /*IMPRIMIR NUMERO*/
+    static void imprimir(int x){ //imprimeix el text
+        PrintStream escriptor = new PrintStream(System.out);
+        escriptor.print(x);
+    }
+
     /*************************************************************************/
-    /*·······························LECTURES································*/
+   /*·······························LECTURES································*/
     /*************************************************************************/
 
-    /*LLEGIR ARXIU*/
+   /*LLEGIR ARXIU*/
     void llegirLinia(File arxiu){ //llegir arxiu existent o no
         try {
             Scanner sc = new Scanner(arxiu);
@@ -119,25 +125,34 @@ public class Biblioteca {
     }
 
     /*************************************************************************/
-    /*································GETTERS································*/
+   /*································GETTERS································*/
     /*************************************************************************/
 
     /*************************************************************************/
-    /*································SETTERS································*/
+   /*································SETTERS································*/
     /*************************************************************************/
 
 
     /*************************************************************************/
-    /*·································ALTRES································*/
+   /*·································ALTRES································*/
     /*************************************************************************/
 
-    /*APRETAR INTRO PER A CONTINUAR*/
+   /*APRETAR INTRO PER A CONTINUAR*/
     public void continuar(){
 
         Scanner sc = new Scanner(System.in);
 
         imprimir("Prem intro per continuar...");
         sc.nextLine();
+    }
+
+    /*TITUL AGENDA*/
+    public void titol(){
+        imprimir("                                                      "+
+                "                     ____   ____          __                 _____  \n" +
+                "              /\\   |      |     | \\  | |   \\  /\\       (| --- | \n" +
+                "             /__\\  |  __  |---  |  \\ | |    | /__\\      (| --- | \n" +
+                "            /    \\ |____| |____ |   \\| |__ / /    \\     (|_____| ");
     }
 
     void funcioTaula(String[] rows, String[][] dades){
@@ -194,4 +209,6 @@ public class Biblioteca {
     }
 
 }
+
+
 
