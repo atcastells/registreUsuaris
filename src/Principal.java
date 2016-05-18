@@ -12,19 +12,15 @@ public class Principal {
     void inici(){
         /*Instanciem Objectes*/
         Biblioteca gui = new Biblioteca();
-        /*Definim el fitxer*/
+        /*Definicio de variables*/
+        ArrayList<Usuari> llistaUsuaris= new ArrayList<Usuari>();  //ArrayList Per a la agenda  /*Definim el fitxer*/
         File agenda = new File("Agenda.txt");
-        /*Comprobem si el fitxer existeix*/
-        /*Comprobem si el fitxer te dades*/
-
         /*Si hi han dades les carreguem*/
+        carregarDades(agenda,llistaUsuaris);
         /*Menu*/
         int opcio= 0;//opció que escollira l'usuari
         int opcio_submenu= 0;
         int opcio_submenu_llistat=0;
-
-        /*Definicio de variables*/
-        ArrayList<Usuari> Agenda= new ArrayList<Usuari>();  //ArrayList Per a la agenda
 
         while (opcio<menu_principal.length-1){
             gui.decoracio_menus(menu_principal.length, menu_principal);
@@ -73,6 +69,39 @@ public class Principal {
             }
     }
 
+    void carregarDades (File arxiu,ArrayList<Usuari> agenda){
+           String linia = "";
+
+    try {
+        Scanner sc = new Scanner(arxiu);
+        while (sc.hasNextLine()){
+            linia = sc.nextLine();
+            String[] dadesLinia = linia.split(" ");
+            if(!(dadesLinia[0] == null)){
+                afegirUsuari(dadesLinia,agenda);
+            }
+        }
+    }
+    catch (FileNotFoundException e){
+
+    }
+
+    }
+     void afegirUsuari(String[] dades, ArrayList<Usuari> agenda){
+         //Ordre dades
+         //Nom Usuari Nom Cognom Correu Contrasenya Baixa
+         String nomUsuari = dades[0].toUpperCase();
+         String nom = dades[1].toUpperCase();
+         String cognom = dades[2].toUpperCase();
+         String correu = dades[3].toUpperCase();
+         String contrasenya = dades[4].toUpperCase();
+         boolean baixa = false;
+         if (dades[5].equalsIgnoreCase("True")){
+             baixa = true;
+         }
+         agenda.add(new Usuari(nomUsuari,nom,cognom,correu,contrasenya,baixa));
+     }
+
     //Arrays Menus
     //arrays de menus: menu_principal, menu_eliminar, menu_llistat
     String[] menu_principal = {
@@ -88,5 +117,10 @@ public class Principal {
     };
     String[] menu_llistat = {
             "MENÚ LLISTAT","1) Usuaris d'alta","2) Usuaris de baix","3) Sortir"
+    };
+
+    //Arrays columnes
+    String[] columnesUsuari = {
+            "Nº","USUARI","NOM","COGNOM","CORREU","CONTRASENYA","BAIXA"
     };
 }

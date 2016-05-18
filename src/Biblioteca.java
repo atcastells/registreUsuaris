@@ -140,5 +140,58 @@ public class Biblioteca {
         sc.nextLine();
     }
 
+    void funcioTaula(String[] rows, String[][] dades){
+        int length = 0;
+        int numRows = rows.length;
+        int[] rowsLength = new int[numRows];
+        String taula = "";
+        String separacio = "    ";
+
+        /**Calculem la mida màxima de la columna*/
+        for(int i = 0; i < numRows;i++){
+            for (int j = 0;j < dades.length;j++){
+                if(dades[j][i].length() > length){
+                    length += dades[j][i].length();
+                }
+            }
+            if (rows[i].length() > length){
+                length += rows[i].length();
+            }
+            rowsLength[i] = length;
+            length = 0;
+        }
+
+        /**Imprimim les columnes*/
+        for (int i = 0;i < numRows; i++){
+            taula += rows[i];
+            for (int j = 0; j < (rowsLength[i] - rows[i].length());j++){
+                taula+=" ";
+            }
+            taula+=separacio;
+        }
+        taula+="\n";
+        /**Imprimim separació columnes/dades*/
+        for(int i = 0; i < numRows;i++){
+            for(int j = 0; j < rowsLength[i];j++){
+                taula+="-";
+            }
+            taula+=separacio;
+        }
+        taula+="\n";
+        /**Afegim les dades a la taula*/
+        for(int i = 0; i < dades.length;i++){
+            for(int j = 0; j < numRows;j++){
+                taula+=dades[i][j];
+                for(int k = 0;k < (rowsLength[j] - dades[i][j].length());k++){
+                    taula+=" ";
+                }
+                taula+=separacio;
+            }
+            taula+="\n";
+        }
+        /**Imprimim la taula*/
+        imprimir(taula);
+    }
+
 }
 

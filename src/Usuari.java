@@ -9,7 +9,7 @@ public class Usuari{
     String usuari;
     Boolean baixa;
 
-    public Usuari(String nom, String cognom, String correu, String contrasenya, String usuari, Boolean baixa){
+    public Usuari(String usuari,String nom, String cognom, String correu, String contrasenya, Boolean baixa){
         this.nom = nom;
         this.cognom = cognom;
         this.correu = correu;
