@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Scanner;
 
 public class Principal {
@@ -52,6 +53,14 @@ public class Principal {
                         opcio_submenu_llistat = gui.readInt("Trieu una opcio: ");
                         switch(opcio_submenu_llistat){
                             case 1:
+                                llistaUsuaris.sort(new Comparator<Usuari>() {
+                                    @Override
+                                    public int compare(Usuari u1, Usuari u2) {
+                                        String name1 = (u1.nom + " " + u1.cognom).trim();
+                                        String name2 = (u2.nom + " " + u2.cognom).trim();
+                                        return name1.compareToIgnoreCase(name2);
+                                    }
+                                });
                                 gui.funcioTaula(columnesUsuari,llistaToArray(llistaUsuaris));
                                 break;
                             case 2:
@@ -122,7 +131,7 @@ public class Principal {
             "Donar de baixa","Eliminar definitivament","Sortir"
     };
     String[] menu_llistat = {
-            "Usuaris d'alta","Usuaris de baix","Sortir"
+            "Usuaris d'alta","Usuaris de baixa","Sortir"
     };
     //Arrays columnes
     String[] columnesUsuari = {
