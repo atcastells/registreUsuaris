@@ -21,7 +21,7 @@ public class Principal {
         int opcio= 0;//opció que escollira l'usuari
         int opcio_submenu= 0;
         int opcio_submenu_llistat=0;
-
+        gui.funcioTaula(columnesUsuari,llistaToArray(llistaUsuaris));
         while (opcio<menu_principal.length-1){
             gui.decoracio_menus(menu_principal.length, menu_principal);
             opcio = gui.readInt("Trieu una opcio: ");
@@ -71,6 +71,7 @@ public class Principal {
 
     void carregarDades (File arxiu,ArrayList<Usuari> agenda){
            String linia = "";
+        System.out.print(arxiu.getAbsolutePath()+"\n");
     try {
         Scanner sc = new Scanner(arxiu);
         while (sc.hasNextLine()){
