@@ -145,14 +145,19 @@ public class Biblioteca {
         imprimir("Prem intro per continuar...");
         sc.nextLine();
     }
-
+    String funcioMenu(String[] array){
+        String menu = "";
+        for (int i = 0; i < array.length; i++){
+            menu += ("#"+(i+1)+"    "+array[i]+"\n");
+        }
+        return menu;
+    }
     /*TITUL AGENDA*/
     public void titol(){
-        imprimir("                                                      "+
-                "                     ____   ____          __                 _____  \n" +
-                "              /\\   |      |     | \\  | |   \\  /\\       (| --- | \n" +
+        imprimir("                    ____   ____         __                _____  \n" +
+                "              /\\   |      |     | \\  | |   \\   /\\       (| --- | \n" +
                 "             /__\\  |  __  |---  |  \\ | |    | /__\\      (| --- | \n" +
-                "            /    \\ |____| |____ |   \\| |__ / /    \\     (|_____| ");
+                "            /    \\ |____| |____ |   \\| |__ / /    \\     (|_____| "+"\n\n");
     }
 
     void funcioTaula(String[] rows, String[][] dades){
