@@ -1,3 +1,4 @@
+
 public class Usuari{
     String nom;
     String cognom;
@@ -6,13 +7,13 @@ public class Usuari{
     String usuari;
     Boolean baixa;
 
-    public Usuari(String nom, String cognom, String correu, String contrasenya, String usuari, Boolean baixa){
+    public Usuari(String nom, String cognom, String correu, String contrasenya, String usuari){
         this.nom = nom;
         this.cognom = cognom;
         this.correu = correu;
         this.contrasenya = contrasenya;
         this.usuari = usuari;
-        this.baixa = baixa;
+        this.baixa = false;
     }
 
     public String toString(){
@@ -22,7 +23,6 @@ public class Usuari{
     /*************************************************************************/
     /*································GETTERS································*/
     /*************************************************************************/
-
     public String getnom() {
         return nom;
     }
