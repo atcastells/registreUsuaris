@@ -303,6 +303,8 @@ public class Principal {
 
     String sumarNomUsuari(String nomUsuari){
         int numDigits = 0;
+        String nomSenseXifra;
+        int xifra = 0;
         /*Contem el num de digits*/
         for (int i = nomUsuari.length(); i < 0; i--) {
             char charUsuari = nomUsuari.charAt(i);
@@ -315,9 +317,10 @@ public class Principal {
             return nomUsuari+1;
         }
         else {
-            String nomSenseXifra = nomUsuari.substring()
+            nomSenseXifra = nomUsuari.substring(0,nomUsuari.length()-(numDigits+1));
+            xifra = Integer.parseInt(nomUsuari.substring(nomUsuari.length()-(numDigits+1)))+1;
+            return nomSenseXifra+xifra;
         }
-        return nomUsuari;
     }
     /*************************************************************************/
     /*·························· BORRAR CONTACTE ····························*/
