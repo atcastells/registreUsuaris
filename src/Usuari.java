@@ -8,13 +8,13 @@ public class Usuari{
     private String usuari;
     private boolean baixa;
 
-    public Usuari(String nom, String cognom, String correu, String contrasenya, String usuari){
+    public Usuari(String nom, String cognom, String correu, String contrasenya, String usuari,Boolean baixa){
         this.nom = nom;
         this.cognom = cognom;
         this.correu = correu;
         this.contrasenya = contrasenya;
         this.usuari = usuari;
-        this.baixa = false;
+        this.baixa = baixa;
     }
 
     public String toString(){

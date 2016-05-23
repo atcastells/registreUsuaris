@@ -1,5 +1,3 @@
-import sun.text.bidi.BidiLine;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -152,7 +150,14 @@ public class Principal {
         String cognom = dades[2].toUpperCase(); //Cognom posicio 2
         String correu = dades[3].toUpperCase(); //Correu posicio 3
         String contrasenya = dades[4].toUpperCase(); //Contrassenya posicio 4
-        agenda.add(new Usuari(nom,cognom,correu,contrasenya,nomUsuari)); //afegim un nou objecte a l'agenda amb els parametres que hi ha entre parentesi
+        Boolean baixa;
+        if (dades[5].toUpperCase().equalsIgnoreCase("FALSE")){
+            baixa = false;
+        }
+        else {
+            baixa = true;
+        }
+        agenda.add(new Usuari(nom,cognom,correu,contrasenya,nomUsuari,baixa)); //afegim un nou objecte a l'agenda amb els parametres que hi ha entre parentesi
     }
 
                                 /*Arrays Menus*/
@@ -275,7 +280,7 @@ public class Principal {
         Biblioteca.imprimir("Contrassenya: " +contrasenya);
         String nomUsuari = generarNomUsuari(nom, cognom,agenda);
         Biblioteca.imprimir("\nNom d'Usuari: " +nomUsuari);
-        agenda.add(new Usuari(nom,cognom,correu,contrasenya,nomUsuari)); //afegim un nou objecte a l'agenda amb els parametres que hi ha entre parentesi
+        agenda.add(new Usuari(nom,cognom,correu,contrasenya,nomUsuari,true)); //afegim un nou objecte a l'agenda amb els parametres que hi ha entre parentesi
     }
 
     String generarNomUsuari(String nom, String cognom,ArrayList<Usuari> agenda){
@@ -287,30 +292,31 @@ public class Principal {
         nomUsuari = nom.charAt(0)+cognom+numUsuari;
         int k = nomUsuari.length()-1;
         /*Comprobem si el nom d'usuari existeix*/
-        while (!valid) {
-            for (int i = 0; i < agenda.size(); i++) {
-                if (agenda.get(i).getUsuari().equalsIgnoreCase(nomUsuari)) {
-                    try {
-                        numUsuari = Integer.parseInt(nomUsuari.substring(k, nomUsuari.length()));
-                        Biblioteca.imprimir(numUsuari);
-                        k--;
-                        numUsuari++;
-                        nomUsuari = nomUsuari.substring(0,k);
-                        nomUsuari +=numUsuari+"";
-                    } catch (Exception e) {
-                        Biblioteca.imprimir(e.getMessage());
-                        valid = true;
-                    }
-                }
-                k = nomUsuari.length()-1;
+        for (Usuari u:agenda) {
+            if (u.getUsuari().equalsIgnoreCase(nomUsuari)) {
+                nomUsuari = sumarNomUsuari(nomUsuari);
+                return nomUsuari;
             }
         }
-
         return nomUsuari;
     }
 
-    String sumarNomUsuari(String nomUsuari,ArrayList<Usuari> agenda){
-
+    String sumarNomUsuari(String nomUsuari){
+        int numDigits = 0;
+        /*Contem el num de digits*/
+        for (int i = nomUsuari.length(); i < 0; i--) {
+            char charUsuari = nomUsuari.charAt(i);
+            if (Character.isDigit(charUsuari)){
+                numDigits++;
+            }
+        }
+        /*Si hi han 0 digits*/
+        if (numDigits == 0){
+            return nomUsuari+1;
+        }
+        else {
+            String nomSenseXifra = nomUsuari.substring()
+        }
         return nomUsuari;
     }
     /*************************************************************************/
