@@ -384,7 +384,7 @@ public class Principal {
         /*Comprobem si el nom d'usuari existeix*/
         for (Usuari u:agenda) {
             if (u.getUsuari().equalsIgnoreCase(nomUsuari)) {
-                nomUsuari += "0";
+                nomUsuari += "1";
                 nomUsuari = sumarNomUsuari(nomUsuari,agenda);
                 return nomUsuari;
             }
@@ -403,18 +403,16 @@ public class Principal {
                 numDigits++;
             }
         }
-        System.out.print("Num Digits "+ numDigits);
-       /*Si hi han 0 digits*/
+       /*Si hi han 0 digits al final del nom*/
         if (numDigits == 0){
-            return nomUsuari+1;
+            return nomUsuari+1; //Si existeix el mateix nom d'usuari es crea un igual amb un 1 al final
         }
         else {
+            /*Separem el nom d'usuari amb la part amb xifra i la part sense xifra*/
             nomSenseXifra = nomUsuari.substring(0,nomUsuari.length()-numDigits);
-            Biblioteca.imprimir(nomUsuari+"\n");
-            Biblioteca.imprimir(nomSenseXifra+"\n");
             xifra = Integer.parseInt(nomUsuari.substring(nomUsuari.length()-numDigits,nomUsuari.length()));
             nomUsuari = nomSenseXifra+xifra;
-            xifra = comprobaNomUsuari(nomSenseXifra,xifra,agenda);
+            xifra = comprobaNomUsuari(nomSenseXifra,xifra,agenda); //Comprobem que la xifra no es repeteix en un altre nom d'usuari
             return nomSenseXifra+xifra;
         }
     }
@@ -426,8 +424,11 @@ public class Principal {
             if(agenda.get(i).getUsuari().equalsIgnoreCase(nomUsuari)){
                 xifraUsuari++;
                 nomUsuari = nomSenseXifra+xifraUsuari;
-                i = 0;
+                i = 0;  //Si el nom d'usuari existia tornem a començar el bucle per veure si tambe existeix el nou.
             }
+        }
+        if (xifraUsuari == 0){
+            return 1;
         }
         return xifraUsuari;
     }
