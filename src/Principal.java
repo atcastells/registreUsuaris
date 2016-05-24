@@ -47,7 +47,7 @@ public class Principal {
         while (opcio<menu_principal.length){
             gui.titol(); //imprimim titol per a la decoracio del programa
             gui.imprimir(gui.funcioMenu(menu_principal)); //gui.decoracio_menus(menu_principal.length, menu_principal);
-            opcio = gui.readInt("Trieu una opcio: ");
+            opcio = gui.readInt("\nTrieu una opcio: ");
             switch(opcio){
 
                 case 1: //Registrar usuari
@@ -55,28 +55,33 @@ public class Principal {
                     gui.imprimir("\n\nContacte guardat!\n");
                     //resum de dades
                     llistaUsuaris.sort(ordenarPerNom);
+                    gui.continuar();
                     break;
 
                 case 2: //Consultar usuari
                     mostrarContacte(llistaUsuaris);
+                    gui.continuar();
                     break;
 
                 case 3: //Menu eliminar
                     opcio_submenu = 0;
                     while(opcio_submenu<menu_eliminar.length){
+                        gui.imprimir("\n");
                         gui.imprimir(gui.funcioMenu(menu_eliminar)); //gui.decoracio_menus(menu_eliminar.length, menu_eliminar);
-                        opcio_submenu = gui.readInt("Trieu una opcio: ");
+                        opcio_submenu = gui.readInt("\nTrieu una opcio: ");
                         switch(opcio_submenu){
                             case 1: //donar de baixa un contacte de l'agenda
                                 gui.funcioTaula(columnesUsuari,llistaToArrayAlta(llistaUsuaris)); //mostrem la llista de contactes
                                 gui.imprimir("\nQuin usuari vols donar de baixa?");
                                 int posicio = Biblioteca.readInt("\nNº: ") -1;
                                 donarDeBaixa(posicio, llistaUsuaris);
+                                gui.continuar();
                                 break;
 
                             case 2: //eliminar tots els contactes amb baixa
                                 borrarContactesBaixa(llistaUsuaris);
                                 gui.imprimir("\n\n");
+                                gui.continuar();
                                 break;
                         }
                     }
@@ -85,8 +90,9 @@ public class Principal {
                 case 4: //Menu llistar
                     opcio_submenu_llistat = 0;
                     while(opcio_submenu_llistat<menu_llistat.length){
+                        gui.imprimir("\n");
                         gui.imprimir(gui.funcioMenu(menu_llistat)); //gui.decoracio_menus(menu_llistat.length, menu_llistat);
-                        opcio_submenu_llistat = gui.readInt("Trieu una opcio: ");
+                        opcio_submenu_llistat = gui.readInt("\nTrieu una opcio: ");
                         switch(opcio_submenu_llistat){
 
                             case 1: //mostrar contactes d'alta en l'agenda
@@ -103,6 +109,7 @@ public class Principal {
                                     gui.imprimir("Total usuaris: "+llistaToArrayAlta(llistaUsuaris).length);
                                 }
                                 gui.imprimir("\n\n");
+                                gui.continuar();
                                 break;
 
                             case 2: //mostrar contactes de baixa en l'agenda
@@ -114,11 +121,12 @@ public class Principal {
                                     gui.imprimir("Total usuaris: "+llistaToArrayBaixa(llistaUsuaris).length);
                                 }
                                 gui.imprimir("\n\n");
+                                gui.continuar();
                                 break;
                         }
                     }
             }
-            gui.continuar();
+            //
         }
         guardarDades(llistaUsuaris, agenda);
         System.out.println("** Fi del programa **");
@@ -233,13 +241,22 @@ public class Principal {
             "Nº","USUARI","NOM","COGNOM","CORREU"
     };
     String[] columnesUsuariExtended = {
-            "USUARI","NOM","COGNOM","CORREU","CONTRASSENYA","ESTAT"
+            "USUARI","NOM","COGNOM","CORREU","CONTRASSENYA","BAIXA"
     };
     String[] columnesEstadistiques = {
             "Total usuaris"
     };
 
                             /*FUNCIONS AUXILIARS*/
+
+    int buscaPosicio(String nomUsuari, ArrayList<Usuari> llista){
+        for (int i = 0; i < llista.size(); i++) {
+            if(llista.get(i).getUsuari().equalsIgnoreCase(nomUsuari)){
+                return i;
+            }
+        }
+        return -1;
+    }
 
     String[][] usuariToArray(ArrayList<Usuari> llista, ArrayList<Integer> pos){
         String[][] dadesUsuaris = new String[pos.size()][7];
@@ -253,15 +270,15 @@ public class Principal {
         return dadesUsuaris;
     }
 
-    String[][] usuariToArrayExtended (ArrayList<Usuari> llista, ArrayList<Integer> pos, int i){
-        String[][] dadesUsuaris = new String[pos.size()][6];
+    String[][] usuariToArrayExtended (ArrayList<Usuari> llista, int i){
+        String[][] dadesUsuaris = new String[1][6];
 
-        dadesUsuaris[i][0] = llista.get(pos.get(i)).getUsuari();
-        dadesUsuaris[i][1] = llista.get(pos.get(i)).getNom();
-        dadesUsuaris[i][2] = llista.get(pos.get(i)).getCognom();
-        dadesUsuaris[i][3] = llista.get(pos.get(i)).getCorreu();
-        dadesUsuaris[i][4] = llista.get(pos.get(i)).getContrasenya();
-        if (llista.get(pos.get(i)).getBaixa() == false){
+        dadesUsuaris[i][0] = llista.get(i).getUsuari();
+        dadesUsuaris[i][1] = llista.get(i).getNom();
+        dadesUsuaris[i][2] = llista.get(i).getCognom();
+        dadesUsuaris[i][3] = llista.get(i).getCorreu();
+        dadesUsuaris[i][4] = llista.get(i).getContrasenya();
+        if (llista.get(i).getBaixa() == false){
             dadesUsuaris[i][5] = "FALSE";
         }
         else{
@@ -367,35 +384,53 @@ public class Principal {
         /*Comprobem si el nom d'usuari existeix*/
         for (Usuari u:agenda) {
             if (u.getUsuari().equalsIgnoreCase(nomUsuari)) {
-                nomUsuari = sumarNomUsuari(nomUsuari);
+                nomUsuari += "0";
+                nomUsuari = sumarNomUsuari(nomUsuari,agenda);
                 return nomUsuari;
             }
         }
         return nomUsuari;
     }
 
-    String sumarNomUsuari(String nomUsuari){
+    String sumarNomUsuari(String nomUsuari,ArrayList<Usuari> agenda){
         int numDigits = 0;
         String nomSenseXifra;
         int xifra = 0;
        /*Contem el num de digits*/
-        for (int i = nomUsuari.length(); i < 0; i--) {
+        for (int i = nomUsuari.length()-1; i > 0; i--) {
             char charUsuari = nomUsuari.charAt(i);
             if (Character.isDigit(charUsuari)){
                 numDigits++;
             }
         }
+        System.out.print("Num Digits "+ numDigits);
        /*Si hi han 0 digits*/
         if (numDigits == 0){
             return nomUsuari+1;
         }
         else {
-            nomSenseXifra = nomUsuari.substring(0,nomUsuari.length()-(numDigits+1));
-            xifra = Integer.parseInt(nomUsuari.substring(nomUsuari.length()-(numDigits+1)))+1;
+            nomSenseXifra = nomUsuari.substring(0,nomUsuari.length()-numDigits);
+            Biblioteca.imprimir(nomUsuari+"\n");
+            Biblioteca.imprimir(nomSenseXifra+"\n");
+            xifra = Integer.parseInt(nomUsuari.substring(nomUsuari.length()-numDigits,nomUsuari.length()));
+            nomUsuari = nomSenseXifra+xifra;
+            xifra = comprobaNomUsuari(nomSenseXifra,xifra,agenda);
             return nomSenseXifra+xifra;
         }
     }
 
+    int comprobaNomUsuari(String nomSenseXifra,int xifra, ArrayList<Usuari> agenda){
+        int xifraUsuari = 0;
+        String nomUsuari = nomSenseXifra+xifra;
+        for (int i = 0; i < agenda.size(); i++) {
+            if(agenda.get(i).getUsuari().equalsIgnoreCase(nomUsuari)){
+                xifraUsuari++;
+                nomUsuari = nomSenseXifra+xifraUsuari;
+                i = 0;
+            }
+        }
+        return xifraUsuari;
+    }
     /*************************************************************************/
     /*·························· BORRAR CONTACTE ····························*/
     /*************************************************************************/
@@ -412,7 +447,7 @@ public class Principal {
     }
 
     void donarDeBaixa (int pos, ArrayList<Usuari> agenda){
-        if (pos >= 0 && pos < agenda.size() ){
+        if (pos >= 0 && pos < agenda.size()){
             agenda.get(pos).setBaixa(true);
             Biblioteca.imprimir("\nContacte donat de baixa!\n");
         }
@@ -436,6 +471,7 @@ public class Principal {
 
         Biblioteca.imprimir("\nBusca: ");
         text = Biblioteca.llegirString().toUpperCase();
+        Biblioteca.imprimir("\n");
 
         for (int i = 0; i < agenda.size(); i++) {
             if(agenda.get(i).getNom().contains(text)||agenda.get(i).getCognom().contains(text)||agenda.get(i).getCorreu().contains(text)||agenda.get(i).getUsuari().contains(text)){
@@ -449,17 +485,21 @@ public class Principal {
         }
         else{
             if (usuariToArray(agenda,posicions).length == 1) {
-                Biblioteca.funcioTaula(columnesUsuari,usuariToArray(agenda,posicions));
+                Biblioteca.funcioTaula(columnesUsuariExtended,usuariToArrayExtended(agenda,posicio));
+                Biblioteca.imprimir("\n");
             }
             else{
                 Biblioteca.funcioTaula(columnesUsuari,usuariToArray(agenda,posicions));
-                Biblioteca.imprimir("\n\nNº: ");
+                Biblioteca.imprimir("\nNº: ");
                 posicio = sc.nextInt();
+                String nomUsuari = usuariToArray(agenda,posicions)[0][1];
+                posicio = buscaPosicio(nomUsuari,agenda);
                 if (posicio >= 0 && posicio < agenda.size()){
-                    Biblioteca.funcioTaula(columnesUsuariExtended,usuariToArrayExtended(agenda,posicions,posicio));
+                    Biblioteca.funcioTaula(columnesUsuariExtended,usuariToArrayExtended(agenda,posicio));
+                    Biblioteca.imprimir("\n");
                 }
                 else {
-                    Biblioteca.imprimir("\nNo hi ha cap contacte en aquesta posicio\n");
+                    Biblioteca.imprimir("\nNo hi ha cap contacte en aquesta posicio\n\n");
                 }
             }
         }
