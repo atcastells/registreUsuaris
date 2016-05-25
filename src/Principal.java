@@ -270,16 +270,16 @@ public class Principal {
     }
     String[][] usuariToArrayExtended (ArrayList<Usuari> llista, int i){
         String[][] dadesUsuaris = new String[1][6];
-        dadesUsuaris[i][0] = llista.get(i).getUsuari();
-        dadesUsuaris[i][1] = llista.get(i).getNom();
-        dadesUsuaris[i][2] = llista.get(i).getCognom();
-        dadesUsuaris[i][3] = llista.get(i).getCorreu();
-        dadesUsuaris[i][4] = llista.get(i).getContrasenya();
+        dadesUsuaris[0][0] = llista.get(i).getUsuari();
+        dadesUsuaris[0][1] = llista.get(i).getNom();
+        dadesUsuaris[0][2] = llista.get(i).getCognom();
+        dadesUsuaris[0][3] = llista.get(i).getCorreu();
+        dadesUsuaris[0][4] = llista.get(i).getContrasenya();
         if (llista.get(i).getBaixa() == false){
-            dadesUsuaris[i][5] = "FALSE";
+            dadesUsuaris[0][5] = "FALSE";
         }
         else{
-            dadesUsuaris[i][5] = "TRUE";
+            dadesUsuaris[0][5] = "TRUE";
         }
         return dadesUsuaris;
     }
@@ -478,6 +478,7 @@ public class Principal {
             if(agenda.get(i).getNom().contains(text)||agenda.get(i).getCognom().contains(text)||agenda.get(i).getCorreu().contains(text)||agenda.get(i).getUsuari().contains(text)){
                 posicions.add(i);
                 existeix = true;
+                Biblioteca.imprimir("Usuari nº "+i+" amb nom "+agenda.get(i).getNom()+"\n");
             }
         }
 
@@ -486,13 +487,12 @@ public class Principal {
         }
         else{
             if (usuariToArray(agenda,posicions).length == 1) {
-                Biblioteca.funcioTaula(columnesUsuariExtended,usuariToArrayExtended(agenda,posicio));
+                Biblioteca.funcioTaula(columnesUsuariExtended,usuariToArrayExtended(agenda,(int)posicions.get(0)));
                 Biblioteca.imprimir("\n");
             }
             else{
                 Biblioteca.funcioTaula(columnesUsuari,usuariToArray(agenda,posicions));
-                Biblioteca.imprimir("\nNº: ");
-                posicio = sc.nextInt();
+                posicio = Biblioteca.readInt("\nNº: ");
                 String nomUsuari = usuariToArray(agenda,posicions)[0][1];
                 posicio = buscaPosicio(nomUsuari,agenda);
                 if (posicio >= 0 && posicio < agenda.size()){
