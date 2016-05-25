@@ -366,6 +366,14 @@ public class Principal {
         }
         Biblioteca.imprimir("Correu: ");
         String correu = Biblioteca.llegirString().toUpperCase();
+        while (correu.equals("") || !(correu.contains("@")) || !(correu.contains("."))){
+            if(correu.equals(""))
+                Biblioteca.imprimir("El camp no pot estar buit!\n");
+            if(!(correu.contains("@")) || !(correu.contains(".")))
+                Biblioteca.imprimir("El correu es incorrecte!\n");
+            Biblioteca.imprimir("\nCorreu: ");
+            correu = Biblioteca.llegirString().toUpperCase();
+        }
         String contrasenya = Usuari.generar_contrasenya();
         Biblioteca.imprimir("Contrassenya: " +contrasenya);
         String nomUsuari = generarNomUsuari(nom, cognom,agenda);
