@@ -257,7 +257,6 @@ public class Principal {
         }
         return -1;
     }
-
     String[][] usuariToArray(ArrayList<Usuari> llista, ArrayList<Integer> pos){
         String[][] dadesUsuaris = new String[pos.size()][7];
         for (int i = 0; i < pos.size(); i++) {
@@ -269,10 +268,8 @@ public class Principal {
         }
         return dadesUsuaris;
     }
-
     String[][] usuariToArrayExtended (ArrayList<Usuari> llista, int i){
         String[][] dadesUsuaris = new String[1][6];
-
         dadesUsuaris[i][0] = llista.get(i).getUsuari();
         dadesUsuaris[i][1] = llista.get(i).getNom();
         dadesUsuaris[i][2] = llista.get(i).getCognom();
@@ -286,17 +283,14 @@ public class Principal {
         }
         return dadesUsuaris;
     }
-
     String[][] llistaToArrayAlta(ArrayList<Usuari> llista){
         /*Creem array per als usuaris de alta*/
         int midaArray = 0;
-
         for (int i = 0; i < llista.size(); i++) {
             if(llista.get(i).getBaixa() == false){
                 midaArray++;
             }
         }
-
         String[][] dadesUsuaris = new String[midaArray][7];
         int contador = 0;
         for (int i = 0; i < llista.size(); i++) {
@@ -314,13 +308,11 @@ public class Principal {
     String[][] llistaToArrayBaixa(ArrayList<Usuari> llista){
         /*Creem array per als usuaris de alta*/
         int midaArray = 0;
-
         for (int i = 0; i < llista.size(); i++) {
             if(llista.get(i).getBaixa() == true){
                 midaArray++;
             }
         }
-
         String[][] dadesUsuaris = new String[midaArray][7];
         int contador = 0;
         for (int i = 0; i < llista.size(); i++) {
