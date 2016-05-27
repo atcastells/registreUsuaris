@@ -25,7 +25,7 @@ void carregarDades (File arxiu,ArrayList<Usuari> agenda){
             Scanner sc = new Scanner(arxiu); //inicialitzem l'scanner
             while (sc.hasNextLine()){ //mentre hi hagi alguna per llegir
                 linia = sc.nextLine();
-                String[] dadesLinia = linia.split(";"); //cada cop que la linia sera un espai dividirem la cadena
+                String[] dadesLinia = linia.split(";"); //cada cop que la linia sera un ';' dividirem la cadena
                 if(!(dadesLinia[0] == null)){ //si en la primera posicio de cada linia del fitxer hi ha text
                     afegirUsuari(dadesLinia,agenda); //afegim un usuari nou amb les seves dades
                 }
@@ -34,7 +34,11 @@ void carregarDades (File arxiu,ArrayList<Usuari> agenda){
         catch (FileNotFoundException e){
         }
     }
+```
 
+    La segona, afegirUsuari, agafa les dades enviades per la funcio anterior i les afegeix a la ArrayList on tenim guardats els usuaris.
+
+```java
     void afegirUsuari(String[] dades, ArrayList<Usuari> agenda){
         /* Quan afegirem un usuari, guardarem les dades de forma ordenada en l'ArrayList */
         /* Ordre de les dades: Nom Usuari, Nom, Cognom, Correu, Contrasenya i Baixa */
