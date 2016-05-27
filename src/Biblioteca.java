@@ -129,7 +129,7 @@ public class Biblioteca {
     /*************************************************************************/
 
     /*APRETAR INTRO PER A CONTINUAR*/
-    public void continuar(){
+    public static void continuar(){
 
         Scanner sc = new Scanner(System.in);
 

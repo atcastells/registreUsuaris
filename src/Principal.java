@@ -12,13 +12,13 @@ public class Principal {
         programa.inici();
     }
 
-    void inici(){
+    void inici() {
 
         /*Instanciem Objectes*/
         Biblioteca gui = new Biblioteca();
 
         /*Definicio de variables*/
-        ArrayList<Usuari> llistaUsuaris= new ArrayList<Usuari>();  //ArrayList per a la agenda
+        ArrayList<Usuari> llistaUsuaris = new ArrayList<Usuari>();  //ArrayList per a la agenda
         /*Comparador ordenar per nom*/
         Comparator<Usuari> ordenarPerNom = new Comparator<Usuari>() { //ordenem la llista de contactes
             public int compare(Usuari u1, Usuari u2) {
@@ -31,7 +31,7 @@ public class Principal {
         File agenda = new File("Agenda.txt");
 
         /*Si hi han dades les carreguem*/
-        carregarDades(agenda,llistaUsuaris);
+        carregarDades(agenda, llistaUsuaris);
         llistaUsuaris.sort(ordenarPerNom);
 
         /*************************************************************************/
@@ -44,11 +44,11 @@ public class Principal {
         int opcio_submenu_llistat = 0; //??¿?¿
 
         /*Inici del menu*/
-        while (opcio<menu_principal.length){
+        while (opcio != menu_principal.length) {
             gui.titol(); //imprimim titol per a la decoracio del programa
             gui.imprimir(gui.funcioMenu(menu_principal)); //gui.decoracio_menus(menu_principal.length, menu_principal);
             opcio = gui.readInt("\nTrieu una opcio: ");
-            switch(opcio){
+            switch (opcio) {
 
                 case 1: //Registrar usuari
                     afegirContacte(llistaUsuaris);
@@ -65,15 +65,15 @@ public class Principal {
 
                 case 3: //Menu eliminar
                     opcio_submenu = 0;
-                    while(opcio_submenu<menu_eliminar.length){
+                    while (opcio_submenu < menu_eliminar.length) {
                         gui.imprimir("\n");
                         gui.imprimir(gui.funcioMenu(menu_eliminar)); //gui.decoracio_menus(menu_eliminar.length, menu_eliminar);
                         opcio_submenu = gui.readInt("\nTrieu una opcio: ");
-                        switch(opcio_submenu){
+                        switch (opcio_submenu) {
                             case 1: //donar de baixa un contacte de l'agenda
-                                gui.funcioTaula(columnesUsuari,llistaToArrayAlta(llistaUsuaris)); //mostrem la llista de contactes
+                                gui.funcioTaula(columnesUsuari, llistaToArrayAlta(llistaUsuaris)); //mostrem la llista de contactes
                                 gui.imprimir("\nQuin usuari vols donar de baixa?");
-                                int posicio = Biblioteca.readInt("\nNº: ") -1;
+                                int posicio = Biblioteca.readInt("\nNº: ") - 1;
                                 donarDeBaixa(posicio, llistaUsuaris);
                                 gui.continuar();
                                 break;
@@ -84,52 +84,62 @@ public class Principal {
                                 gui.continuar();
                                 break;
                         }
+                        if (opcio > menu_eliminar.length || opcio < 1) {
+                            Biblioteca.imprimir("Opcio incorrecta!\n");
+                            Biblioteca.continuar();
+                        }
                     }
                     break;
 
                 case 4: //Menu llistar
                     opcio_submenu_llistat = 0;
-                    while(opcio_submenu_llistat<menu_llistat.length){
+                    while (opcio_submenu_llistat < menu_llistat.length) {
                         gui.imprimir("\n");
                         gui.imprimir(gui.funcioMenu(menu_llistat)); //gui.decoracio_menus(menu_llistat.length, menu_llistat);
                         opcio_submenu_llistat = gui.readInt("\nTrieu una opcio: ");
-                        switch(opcio_submenu_llistat){
+                        switch (opcio_submenu_llistat) {
 
                             case 1: //mostrar contactes d'alta en l'agenda
-                                if (llistaToArrayAlta(llistaUsuaris).length == 0){
+                                if (llistaToArrayAlta(llistaUsuaris).length == 0) {
                                     gui.imprimir("No hi ha dades per mostrar");
-                                }
-                                else{
+                                } else {
                                     gui.imprimir("\n");
-                                    gui.funcioTaula(columnesUsuari,llistaToArrayAlta(llistaUsuaris));
+                                    gui.funcioTaula(columnesUsuari, llistaToArrayAlta(llistaUsuaris));
                                     gui.imprimir("\n");
                                     String[][] estadistiques = {
-                                            {llistaToArrayAlta(llistaUsuaris).length+""}
+                                            {llistaToArrayAlta(llistaUsuaris).length + ""}
                                     };
-                                    gui.imprimir("Total usuaris: "+llistaToArrayAlta(llistaUsuaris).length);
+                                    gui.imprimir("Total usuaris: " + llistaToArrayAlta(llistaUsuaris).length);
                                 }
                                 gui.imprimir("\n\n");
                                 gui.continuar();
                                 break;
 
                             case 2: //mostrar contactes de baixa en l'agenda
-                                if (llistaToArrayBaixa(llistaUsuaris).length == 0){
+                                if (llistaToArrayBaixa(llistaUsuaris).length == 0) {
                                     gui.imprimir("\nNo hi ha dades per mostrar");
-                                }
-                                else{
-                                    gui.funcioTaula(columnesUsuari,llistaToArrayBaixa(llistaUsuaris));
-                                    gui.imprimir("Total usuaris: "+llistaToArrayBaixa(llistaUsuaris).length);
+                                } else {
+                                    gui.funcioTaula(columnesUsuari, llistaToArrayBaixa(llistaUsuaris));
+                                    gui.imprimir("Total usuaris: " + llistaToArrayBaixa(llistaUsuaris).length);
                                 }
                                 gui.imprimir("\n\n");
                                 gui.continuar();
                                 break;
                         }
+                        if (opcio > menu_llistat.length || opcio < 1) {
+                            Biblioteca.imprimir("Opcio incorrecta!\n");
+                            Biblioteca.continuar();
+                        }
+                    }
+                    //
+                    if (opcio > menu_principal.length || opcio < 1) {
+                        Biblioteca.imprimir("Opcio incorrecta!\n");
+                        Biblioteca.continuar();
                     }
             }
-            //
+            guardarDades(llistaUsuaris, agenda);
+            System.out.println("** Fi del programa **");
         }
-        guardarDades(llistaUsuaris, agenda);
-        System.out.println("** Fi del programa **");
     }
 
     /*************************************************************************/
