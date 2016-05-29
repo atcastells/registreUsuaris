@@ -6,6 +6,69 @@ import java.util.Scanner;
 import java.util.Random;
 import java.io.PrintStream;
 
+/**
+ *  ##########################
+ *  #      Algorisme         #
+ *  ##########################
+ *
+ *  INICIALITZACIÓ
+ *  --------------------------
+ *
+ *  Llegir arxiu
+ *  Si esta buit
+ *       El creem
+ *  Sinó
+ *      Carreguem String de dades
+ *      Ordenem la llista d'usuaris
+ *  Mostrem menú
+ *  Elegim opció del menu
+ *
+ *  TRACTAMENT DE DADES
+ *  --------------------------
+ *
+ *  1) Inserir usuari
+ *      Inserir nom
+ *          Comprobar camp buit
+ *          Comprobar caracters ilegals
+ *          Tornar a demanar el nom fins que les comprobacions siguen certes
+ *      Inserir cognom
+ *          Comprobar camp buit
+ *          Comprobar caracters ilegals
+ *          Tornar a demanar el cognom fins que les comprobacions siguen certes
+ *      Inserir correu
+ *          mirar que el correu sigui vàlid
+ *          tornar a demanar el correu fins que les combrobacions siguen certes
+ *       Generar contrassenya
+ *       Generar nom usuari
+ *       Baixa = false
+ *       Resum inserció
+ *       Afegim a la llista
+ *       Ordenem la llista d'usuaris
+ *  2) eliminar usuari //posar de baixa un usuari
+ *      Mostrem la llista d'usuaris
+ *      demanem un número
+ *      demanem confirmació
+ *      si la resposta es afirmativa
+ *      baixa = true
+ *      sino
+ *      break
+ *  3) consultar usuari
+ *      escriure dada a buscar
+ *      si coincideix amb el nom o el cognom o el correu
+ *          si nomes hi ha una coincidencia
+ *              mostrar dades
+ *          sinó
+ *              mostrem possibles opcions amb números
+ *           triar número
+ *           mostrar dades
+ *  4) consultar agenda
+ *      ordenar noms
+ *          si baixa == false
+ *              imprimir
+ *  5) eliminar tots els que estan en baixa
+ *      si baixa == true
+ *          borrar
+ */
 public class Principal {
     public static void main(String[] args) {
         Principal programa = new Principal();
@@ -386,15 +449,12 @@ public class Principal {
     String generarNomUsuari(String nom, String cognom,ArrayList<Usuari> agenda){
         /*Inicialitzem parametres*/
         String nomUsuari = "";
-        int numUsuari = 0;
         boolean valid = false;
         /*El nom d'Usuari es la primera lletra del nom i tot el cognom*/
         nomUsuari = nom.charAt(0)+cognom;
-        int k = nomUsuari.length()-1;
         /*Comprobem si el nom d'usuari existeix*/
         for (Usuari u:agenda) {
             if (u.getUsuari().equalsIgnoreCase(nomUsuari)) {
-                nomUsuari += "1";
                 nomUsuari = sumarNomUsuari(nomUsuari,agenda);
                 return nomUsuari;
             }
@@ -403,28 +463,14 @@ public class Principal {
     }
 
     String sumarNomUsuari(String nomUsuari,ArrayList<Usuari> agenda){
-        int numDigits = 0;
         String nomSenseXifra;
+        nomUsuari = nomUsuari+1;
         int xifra = 0;
-       /*Contem el num de digits*/
-        for (int i = nomUsuari.length()-1; i > 0; i--) {
-            char charUsuari = nomUsuari.charAt(i);
-            if (Character.isDigit(charUsuari)){
-                numDigits++;
-            }
-        }
-       /*Si hi han 0 digits al final del nom*/
-        if (numDigits == 0){
-            return nomUsuari+1; //Si existeix el mateix nom d'usuari es crea un igual amb un 1 al final
-        }
-        else {
-            /*Separem el nom d'usuari amb la part amb xifra i la part sense xifra*/
-            nomSenseXifra = nomUsuari.substring(0,nomUsuari.length()-numDigits);
-            xifra = Integer.parseInt(nomUsuari.substring(nomUsuari.length()-numDigits,nomUsuari.length()));
-            nomUsuari = nomSenseXifra+xifra;
-            xifra = comprobaNomUsuari(nomSenseXifra,xifra,agenda); //Comprobem que la xifra no es repeteix en un altre nom d'usuari
-            return nomSenseXifra+xifra;
-        }
+        /*Separem el nom d'usuari amb la part amb xifra i la part sense xifra*/
+        nomSenseXifra = nomUsuari.substring(0,nomUsuari.length()-1);
+        xifra = Integer.parseInt(nomUsuari.substring(nomUsuari.length()-1,nomUsuari.length()));
+        xifra = comprobaNomUsuari(nomSenseXifra,xifra,agenda); //Comprobem que la xifra no es repeteix en un altre nom d'usuari
+        return nomSenseXifra+xifra;
     }
 
     int comprobaNomUsuari(String nomSenseXifra,int xifra, ArrayList<Usuari> agenda){

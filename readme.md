@@ -14,8 +14,8 @@
 
 
 ### Carrega desde fitxer
-    La carrega desde fitxer es fa a traves de dos funcions.
-    La primera, carregarDades, crea per cada linia del arxiu, una array amb cada camp que esta separat per ';'
+#### La carrega desde fitxer es fa a traves de dos funcions.
+La primera, carregarDades, crea per cada linia del arxiu, una array amb cada camp que esta separat per ';'.
     
 ```java
 void carregarDades (File arxiu,ArrayList<Usuari> agenda){
@@ -36,7 +36,7 @@ void carregarDades (File arxiu,ArrayList<Usuari> agenda){
     }
 ```
 
-    La segona, afegirUsuari, agafa les dades enviades per la funcio anterior i les afegeix a la ArrayList on tenim guardats els usuaris.
+La segona, afegirUsuari, agafa les dades enviades per la funcio anterior i les afegeix a la ArrayList on tenim guardats els usuaris.
 
 ```java
     void afegirUsuari(String[] dades, ArrayList<Usuari> agenda){
@@ -56,5 +56,51 @@ void carregarDades (File arxiu,ArrayList<Usuari> agenda){
             baixa = true;
         }
         agenda.add(new Usuari(nom,cognom,correu,contrasenya,nomUsuari,baixa)); //afegim un nou objecte a l'agenda amb els parametres que hi ha entre parentesi
+    }
+```
+
+### Tractament de dades
+#### Inserir un usuari
+
+```java
+void afegirContacte(ArrayList<Usuari> agenda){
+        /* Ordre de les dades: Nom Usuari, Nom, Cognom, Correu, Contrasenya i Baixa */
+
+        Biblioteca.imprimir("\nNom: ");
+
+        String nom = Biblioteca.llegirString().toUpperCase();
+        while (nom.equals("") || nom.contains(";")){
+            if(nom.equals(""))
+                Biblioteca.imprimir("El camp no pot estar buit!\n");
+            if(nom.contains(";"))
+                Biblioteca.imprimir("El nom te caracters prohibits ';'!\n");
+            Biblioteca.imprimir("\nNom: ");
+            nom = Biblioteca.llegirString().toUpperCase();
+        }
+        Biblioteca.imprimir("Cognom: ");
+        String cognom = Biblioteca.llegirString().toUpperCase();
+        while (cognom.equals("") || cognom.contains(";")){
+            if(cognom.equals(""))
+                Biblioteca.imprimir("El camp no pot estar buit!\n");
+            if(cognom.contains(";"))
+                Biblioteca.imprimir("El cognnom te caracters prohibits ';'!\n");
+            Biblioteca.imprimir("\nCognom: ");
+            cognom = Biblioteca.llegirString().toUpperCase();
+        }
+        Biblioteca.imprimir("Correu: ");
+        String correu = Biblioteca.llegirString().toUpperCase();
+        while (correu.equals("") || !(correu.contains("@")) || !(correu.contains("."))){
+            if(correu.equals(""))
+                Biblioteca.imprimir("El camp no pot estar buit!\n");
+            if(!(correu.contains("@")) || !(correu.contains(".")))
+                Biblioteca.imprimir("El correu es incorrecte!\n");
+            Biblioteca.imprimir("\nCorreu: ");
+            correu = Biblioteca.llegirString().toUpperCase();
+        }
+        String contrasenya = Usuari.generar_contrasenya();
+        Biblioteca.imprimir("Contrassenya: " +contrasenya);
+        String nomUsuari = generarNomUsuari(nom, cognom,agenda);
+        Biblioteca.imprimir("\nNom d'Usuari: " +nomUsuari);
+        agenda.add(new Usuari(nom,cognom,correu,contrasenya,nomUsuari,false)); //afegim un nou objecte a l'agenda amb els parametres que hi ha entre parentesi
     }
 ```
